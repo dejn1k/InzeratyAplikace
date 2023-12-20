@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Management {
   private ArrayList<Vozidlo> inzeraty;
@@ -58,8 +60,7 @@ public class Management {
         System.out.print("Zadavatel: ");
         String zadavatel = scanner.nextLine();
 
-        System.out.print("Datum: ");
-        String datum = scanner.nextLine();
+        String datum = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 
         System.out.print("Rychlost: ");
         int rychlost = scanner.nextInt();
@@ -92,8 +93,7 @@ public class Management {
         System.out.print("Zadavatel: ");
         String zadavatel = scanner.nextLine();
 
-        System.out.print("Datum: ");
-        String datum = scanner.nextLine();
+        String datum = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 
         System.out.print("Rychlost: ");
         int rychlost = scanner.nextInt();
