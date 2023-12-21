@@ -22,7 +22,7 @@ public class Main {
                         break;
                     case 2:
                         // Odebrání inzerátu
-                        // managment.odebratInzerat(...);
+                        management.odebratInzerat();;
                         break;
                     case 3:
                         // Výpis inzerátu
@@ -30,11 +30,10 @@ public class Main {
                         break;
                     case 4:
                         // Detailní výpis inzerátu
-                        // managment.vypsatDetailInzeratu(...);
                         break;
                     case 5:
                         // Vyhledání inzerátů
-                        // managment.vyhledatPodleParametru(...);
+                        management.performSearch();
                         break;
                     case 0:
                         System.out.println("Konec programu.");

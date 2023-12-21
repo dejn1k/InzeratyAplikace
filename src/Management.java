@@ -117,27 +117,168 @@ public class Management {
         return nakladniVozidlo;
     }
 
- public static void printInzeraty(List<Vozidlo> inzerat) {
+    //veci na vyhledavani
+    public void performSearch() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Vyberte typ vyhledávání:");
+        System.out.println("1. Zadavatel");
+        System.out.println("2. Typ vozidla");
+        System.out.println("3. Datum");
+        int volba = scanner.nextInt();
+
+        switch (volba) {
+            case 1:
+                searchByZadavatel();
+                break;
+            case 2:
+                searchByTyp();
+                break;
+            case 3:
+                searchByDatum();
+                break;
+            default:
+                System.out.println("Neplatná volba pro vyhledávání.");
+        }
+    }
+
+    public void searchByZadavatel() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Zadejte zadavatele k vyhledání:");
+
+        String zadavatelToSearch = scanner.nextLine();
+
+        List<Vozidlo> foundAdvertisements = new ArrayList<>();
+
+        for (Vozidlo vozidlo : inzeraty) {
+            if (vozidlo.getZadavatel().equalsIgnoreCase(zadavatelToSearch)) {
+                foundAdvertisements.add(vozidlo);
+            }
+        }
+
+        printSearchResults(foundAdvertisements);
+    }
+
+    public void searchByTyp() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Zadejte typ vozidla k vyhledání:");
+
+        String typToSearch = scanner.nextLine();
+
+        List<Vozidlo> foundAdvertisements = new ArrayList<>();
+
+        for (Vozidlo vozidlo : inzeraty) {
+            if (vozidlo.getTypVozidla().equalsIgnoreCase(typToSearch)) {
+                foundAdvertisements.add(vozidlo);
+            }
+        }
+
+        printSearchResults(foundAdvertisements);
+    }
+
+    public void searchByDatum() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Zadejte datum k vyhledání (ve formátu dd.MM.yyyy):");
+
+        String datumToSearch = scanner.nextLine();
+
+        List<Vozidlo> foundAdvertisements = new ArrayList<>();
+
+        for (Vozidlo vozidlo : inzeraty) {
+            if (vozidlo.getDatum().equals(datumToSearch)) {
+                foundAdvertisements.add(vozidlo);
+            }
+        }
+
+        printSearchResults(foundAdvertisements);
+    }
+
+    private void printSearchResults(List<Vozidlo> foundAdvertisements) {
+        if (!foundAdvertisements.isEmpty()) {
+            System.out.println("Výsledky vyhledávání:");
+
+            for (Vozidlo vozidlo : foundAdvertisements) {
+                System.out.println("Zadavatel: " + vozidlo.getZadavatel());
+                System.out.println("Datum: " + vozidlo.getDatum());
+                System.out.println("Typ vozidla: " + vozidlo.getTypVozidla());
+
+                // Print details based on the type of vozidlo
+                switch (vozidlo.getTypVozidla()) {
+                    case "Osobní Vozidlo":
+                        printOsobniVozidloDetails(vozidlo);
+                        break;
+                    case "Nákladní vozidlo":
+                        printNakladniVozidloDetails(vozidlo);
+                        break;
+                    default:
+                        System.out.println("Nepodporovaný typ vozidla");
+                }
+
+                System.out.println("-------------------------");
+            }
+        } else {
+            System.out.println("Nenalezeny žádné inzeráty odpovídající hledání.");
+        }
+    }
+
+    public void odebratInzerat() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Zadejte index inzerátu k smazání:");
+
+        int indexToDelete = scanner.nextInt();
+
+        if (indexToDelete >= 0 && indexToDelete < inzeraty.size()) {
+            inzeraty.remove(indexToDelete);
+            System.out.println("Inzerát byl úspěšně smazán.");
+        } else {
+            System.out.println("Neplatný index inzerátu.");
+        }
+    }
+
+    public static void printInzeraty(List<Vozidlo> inzerat) {
         for (Vozidlo vozidlo : inzerat) {
             System.out.println("Zadavatel: " + vozidlo.getZadavatel());
             System.out.println("Datum: " + vozidlo.getDatum());
             System.out.println("Typ vozidla: " + vozidlo.getTypVozidla());
 
-            if (vozidlo instanceof OsobniVozidlo) {
-                OsobniVozidlo osobniVozidlo = (OsobniVozidlo) vozidlo;
-                System.out.println("Rychlost: " + osobniVozidlo.getRychlost());
-                System.out.println("Váha: " + osobniVozidlo.getVaha());
-                System.out.println("Barva: " + osobniVozidlo.getBarva());
-            } else if (vozidlo instanceof NakladniVozidlo) {
-                NakladniVozidlo nakladniVozidlo = (NakladniVozidlo) vozidlo;
-                System.out.println("Rychlost: " + nakladniVozidlo.getRychlost());
-                System.out.println("Váha: " + nakladniVozidlo.getVaha());
-                System.out.println("Barva: " + nakladniVozidlo.getBarva());
+            switch (vozidlo.getTypVozidla()) {
+                case "Osobní Vozidlo":
+                    printOsobniVozidloDetails(vozidlo);
+                    break;
+                case "Nákladní vozidlo":
+                    printNakladniVozidloDetails(vozidlo);
+                    break;
+                default:
+                    System.out.println("Nepodporovaný typ vozidla");
             }
-            
-            // Add conditions for other subclasses if needed
 
             System.out.println("-------------------------");
         }
     }
+    private static void printOsobniVozidloDetails(Vozidlo vozidlo) {
+        if (vozidlo instanceof OsobniVozidlo) {
+            OsobniVozidlo osobniVozidlo = (OsobniVozidlo) vozidlo;
+            System.out.println("Rychlost: " + osobniVozidlo.getRychlost());
+            System.out.println("Váha: " + osobniVozidlo.getVaha());
+            System.out.println("Barva: " + osobniVozidlo.getBarva());
+        } else {
+            System.out.println("Chyba v typu vozidla");
+        }
+    }
+
+    private static void printNakladniVozidloDetails(Vozidlo vozidlo) {
+        if (vozidlo instanceof NakladniVozidlo) {
+            NakladniVozidlo nakladniVozidlo = (NakladniVozidlo) vozidlo;
+            System.out.println("Rychlost: " + nakladniVozidlo.getRychlost());
+            System.out.println("Váha: " + nakladniVozidlo.getVaha());
+            System.out.println("Barva: " + nakladniVozidlo.getBarva());
+        } else {
+            System.out.println("Chyba v typu vozidla");
+        }
+    }
 }
+

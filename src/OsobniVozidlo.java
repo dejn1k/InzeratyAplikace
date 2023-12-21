@@ -34,5 +34,9 @@ public class OsobniVozidlo extends Vozidlo {
         this.barva = barva;
     }
     
+    @Override
+    public String toString() {
+        return zadavatel + "," + datum + "," + typVozidla + "," + rychlost + "," + vaha + "," + barva;
+    }
     // Additional methods or constructors if needed
 }
