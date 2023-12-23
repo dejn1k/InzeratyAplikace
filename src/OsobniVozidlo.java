@@ -4,7 +4,7 @@ public class OsobniVozidlo extends Vozidlo {
     private String barva;
 
     public OsobniVozidlo(String zadavatel, String datum, int rychlost, double vaha, String barva) {
-        setTypVozidla("Osobní vozidlo");
+        super(zadavatel, datum, "Osobní vozidlo"); // Call the superclass constructor
         this.rychlost = rychlost;
         this.vaha = vaha;
         this.barva = barva;
@@ -38,5 +38,5 @@ public class OsobniVozidlo extends Vozidlo {
     public String toString() {
         return zadavatel + "," + datum + "," + typVozidla + "," + rychlost + "," + vaha + "," + barva;
     }
-    // Additional methods or constructors if needed
+
 }

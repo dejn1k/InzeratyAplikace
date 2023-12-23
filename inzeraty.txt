@@ -1,0 +1,2 @@
+1,Tomas,23.12.2023,Nákladní vozidlo,90,3250,Modra
+2,Lenka,23.12.2023,Motocykl,120,100,Fialova
